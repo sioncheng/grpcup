@@ -40,14 +40,6 @@ public class App {
 
         System.out.println("grpc " + 8080);
 
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (Objects.nonNull(server)) {
-                    server.shutdown();
-                }
-            }
-        }));
 
         ManagedChannel managedChannel =
                 ManagedChannelBuilder.forAddress("localhost", 8080)
@@ -64,6 +56,19 @@ public class App {
                 .build();
         ProductIDOuterClass.ProductID productID = stub.addProduct(product);
         System.out.println(productID.getValue());
+
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (Objects.nonNull(server)) {
+                    server.shutdown();
+                }
+                if (Objects.nonNull(managedChannel)) {
+                    managedChannel.shutdown();
+                }
+            }
+        }));
+
 
         server.awaitTermination();
 

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package ecommerce;
+
+import "ProductID.proto";
+import "Product.proto";
+
+service ProductInfo {
+  rpc addProduct(Product) returns (ProductID);
+  rpc getProduct(ProductID) returns (Product);
+}

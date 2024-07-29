@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package ecommerce;
+
+message ProductID {
+  string value = 1;
+}
